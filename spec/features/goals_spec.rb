@@ -8,7 +8,8 @@ describe "CRUDing goals" do
                                       :is_private => "true",
                                       :name => "PRIVATESTUFF")}
     pvt_goal.save
-    login
+    let(:user) {sign_up}
+    login(user)
   end
 
   it "shows public goals" do
@@ -19,9 +20,12 @@ describe "CRUDing goals" do
     expect(page).to have_content("PRIVATESTUFF")
   end
 
-  it "doesn't show private goals of other users" do
+  it "doesn't show private goals to other users" do
     user2 = FactoryGirl.build(:user)
-
+    click_on "Sign Out Dawg"
+    sign_in(user2)
+    visit user_url(user)
+    expect(page).to_not have_content("PRIVATESTUFF")
   end
 
 

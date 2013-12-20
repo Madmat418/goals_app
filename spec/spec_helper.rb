@@ -38,7 +38,7 @@ RSpec.configure do |config|
   config.order = "random"
 end
 
-def sign_up(username = "useruseruser", password = "sesame")
+def sign_up(username = "useruseruser", password = "password")
   user = FactoryGirl.build(:user, :username => username, :password => password)
   user.save
   user
