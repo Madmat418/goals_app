@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     @user = User.find_by_credentials(*params[:user].values)
     if @user
       login!
-      redirect_to goals_url
+      redirect_to user_url(@user)
     else
       flash.now[:errors] = ["Invalid username/password"]
       render :new
@@ -15,9 +15,9 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:id])
+    @user = current_user
     @user.reset_session_token!
     session[:token] = nil
-    redirect new_session_url
+    redirect_to new_session_url
   end
 end

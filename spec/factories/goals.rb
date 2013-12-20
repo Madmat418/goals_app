@@ -3,8 +3,6 @@
 FactoryGirl.define do
   factory :goal do
     user_id 1
-    name "MyString"
-    private "MyString"
-    complete "MyString"
+    name "my_goal"
   end
 end

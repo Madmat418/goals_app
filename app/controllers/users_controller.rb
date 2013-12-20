@@ -8,10 +8,22 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       login!
-      redirect_to goals_url
+      redirect_to user_url(@user)
     else
       flash.now[:errors] = @user.errors.full_messages
       render :new
     end
+  end
+
+  def show
+    @user = User.find(params[:id])
+    @public_goals = @user.goals.where(:is_private => "false")
+    @private_goals = @user.goals.where(:is_private => "true")
+    render :show
+  end
+
+  def index
+    @users = User.all
+    render :index
   end
 end

@@ -38,14 +38,16 @@ RSpec.configure do |config|
   config.order = "random"
 end
 
-def sign_up
-  User.new(:username => "useruseruser", :password => "sesame").save
+def sign_up(username = "useruseruser", password = "sesame")
+  user = FactoryGirl.build(:user, :username => username, :password => password)
+  user.save
+  user
 end
 
-def log_in
-  sign_up
+
+def log_in(user)
   visit new_session_url
-  fill_in 'username', :with => "useruseruser"
-  fill_in 'password', :with => "sesame"
+  fill_in 'username', :with => user.username
+  fill_in 'password', :with => "password"
   click_on "Sign In Dawg"
 end

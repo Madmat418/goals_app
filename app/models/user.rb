@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
 
   before_validation :generate_session_token
 
+  has_many(:goals)
+
   def password=(password)
     @password = password
     self.password_digest = BCrypt::Password.create(password)
@@ -32,4 +34,6 @@ class User < ActiveRecord::Base
     user = User.find_by_username(username)
     return user if user && user.is_password?(password)
   end
+
+
 end
