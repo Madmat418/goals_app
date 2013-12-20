@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "the signup process" do
 
-  it "has a new user page"
+  it "has a new user page" do
     visit new_user_url
     expect(page).to have_content "New User"
   end
@@ -10,20 +10,20 @@ describe "the signup process" do
   describe "signing up a user" do
 
     it "shows username on the homepage after signup" do
-    visit new_user_url
-    fill_in 'username', :with => "useruseruser"
-    fill_in 'password', :with => "sesame"
-    click_on "Sign Up Dawg"
-    expect(page).to have_content "useruseruser"
+      visit new_user_url
+      fill_in 'username', :with => "useruseruser"
+      fill_in 'password', :with => "sesame"
+      click_on "Sign Up Dawg"
+      expect(page).to have_content "useruseruser"
+    end
   end
-
 end
 
 describe "logging in" do
-    before(:each) do
-      sign_up
-      visit new_session_url
-      end
+  before(:each) do
+    sign_up
+    visit new_session_url
+  end
   it "has a login page" do
 
     expect(page).to have_content "Log In"
