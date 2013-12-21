@@ -1,15 +1,18 @@
 require 'spec_helper'
 
 describe "CRUDing goals" do
+  let(:user) {sign_up}
+  let(:goal) {FactoryGirl.build(:goal, :user_id => user.id)}
+  let(:pvt_goal) {FactoryGirl.build(:goal,
+                                    :is_private => "true",
+                                    :name => "PRIVATESTUFF",
+                                    :user_id => user.id)}
+
+
   before(:each) do
-    let(:goal) {FactoryGirl.build(:goal)}
     goal.save
-    let(:pvt_goal) {FactoryGirl.build(:goal,
-                                      :is_private => "true",
-                                      :name => "PRIVATESTUFF")}
     pvt_goal.save
-    let(:user) {sign_up}
-    login(user)
+    log_in(user)
   end
 
   it "shows public goals" do
@@ -24,13 +27,14 @@ describe "CRUDing goals" do
     fill_in "goal_name", :with => "lie less"
     click_on "Add Goal"
     guest_visit
-    expect(page).to have_conten("lie less")
+    expect(page).to have_content("lie less")
   end
 
   it "allows you to create private goals" do
     fill_in "goal_name", :with => "more private stuff"
     check('Private')
     click_on "Add Goal"
+    # save_and_open_page
     expect(page).to have_content("more private stuff")
   end
 
@@ -54,15 +58,15 @@ describe "CRUDing goals" do
     expect(page).to have_content("PRIVATESTUFF")
   end
 
-  it "allows you to mark a goal as completed" do
+  # it "allows you to mark a goal as completed" do
+#
+#   end
 
-  end
+end
 
-  def guest_visit
-    user2 = FactoryGirl.build(:user)
-    click_on "Sign Out Dawg"
-    sign_in(user2)
-    visit user_url(user)
-  end
-
+def guest_visit
+  user2 = FactoryGirl.build(:user)
+  click_on "Sign Out Dawg"
+  log_in(user2)
+  visit user_url(user)
 end
