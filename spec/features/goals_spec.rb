@@ -26,7 +26,9 @@ describe "CRUDing goals" do
   it "allows you to create new goals for yourself" do
     fill_in "goal_name", :with => "lie less"
     click_on "Add Goal"
+
     guest_visit
+    save_and_open_page
     expect(page).to have_content("lie less")
   end
 
@@ -66,6 +68,7 @@ end
 
 def guest_visit
   user2 = FactoryGirl.build(:user)
+  user2.save
   click_on "Sign Out Dawg"
   log_in(user2)
   visit user_url(user)

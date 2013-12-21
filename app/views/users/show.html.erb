@@ -3,7 +3,8 @@
   <ul>
     <%@private_goals.each do |goal|%>
       <li><%=goal.name%></li>
-      <%= button_to("Make Public", goal_url(goal))%>
+      <%= button_to("Make Public", goal_url(goal,
+      :goal => {:is_private => "false"}), :method => :put)%>
     <%end%>
   </ul>
   <%end%>
@@ -12,7 +13,8 @@
 <ul>
   <%@public_goals.each do |goal|%>
     <li><%=goal.name%></li>
-    <%= button_to("Make Private", goal_url(goal)) if current_user == @user%>
+    <%= button_to("Make Private", goal_url(goal,
+    :goal => {:is_private => "true"}), :method => :put) if current_user == @user%>
   <%end%>
 </ul>
 
